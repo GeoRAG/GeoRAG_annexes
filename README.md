@@ -66,7 +66,7 @@ query matching address, it would have no problem rejecting the address candidate
 different from the alias street, **Rte nationale 6**.
 
 ## F. NLI scoring function
-Based on the NLI scoring strategy used in [31], we define our NLI scoring function $$s_{nli}(\cdot)$$ as the average of NLI similarities of three pre-trained multilingual cross-encoders[^8][^9][^10]. We purposely chose to aggregate different models' scores to alleviate the impact of false entailment. Specifically, the input of an NLI model is the concatenation of a query $$q$$ and a retrieved address $$d$$ upon which the model returns probabilities $$p_i$$ with $$i\in\{contradiction, neutral, entailement\}$$. We can then compute the NLI similarity as $$1-p_{contradcition}$$. As mentioned in [31], both orders $$(q,d)$$ and $$(d,q)$$ are considered to mitigate positional bias of the NLI system. The NLI similarity of a model $$E$$ is then denoted:
+Based on the NLI scoring strategy used in [1], we define our NLI scoring function $$s_{nli}(\cdot)$$ as the average of NLI similarities of three pre-trained multilingual cross-encoders[^1][^2][^3]. We purposely chose to aggregate different models' scores to alleviate the impact of false entailment. Specifically, the input of an NLI model is the concatenation of a query $$q$$ and a retrieved address $$d$$ upon which the model returns probabilities $$p_i$$ with $$i\in\{contradiction, neutral, entailement\}$$. We can then compute the NLI similarity as $$1-p_{contradcition}$$. As mentioned in [1], both orders $$(q,d)$$ and $$(d,q)$$ are considered to mitigate positional bias of the NLI system. The NLI similarity of a model $$E$$ is then denoted:
 
 
 $$SIM_{E} = \frac{1}{2}(1-p_{contradiction} + 1-p'_{contradiction})$$ 
@@ -75,15 +75,15 @@ Where $$1-p_{contradiction}$$ and $$1-p'_{contradiction}$$ are NLI similarities 
 
 ## G. Encoders description
 
-**DistilBERT [22]**: A lightweight transformer encoder distilled from BERT [9]. We fine-tuned its multilingual version11 to adapt it on our French postal address dataset.
+**DistilBERT [2]**: A lightweight transformer encoder distilled from BERT [3]. We fine-tuned its multilingual version[^4] to adapt it on our French postal address dataset.
 
-**CamemBERT [23]**: A RoBERTa-based [44] encoder pretrained specifically on large-scale French text[^12]. It is widely used on various downstream task due to its French language specificity. We fine-tuned it on our dataset to improve its ability to produce french postal address sentence embedding.
+**CamemBERT [4]**: A RoBERTa-based [5] encoder pretrained specifically on large-scale French text[^5]. It is widely used on various downstream task due to its French language specificity. We fine-tuned it on our dataset to improve its ability to produce french postal address sentence embedding.
 
-**FlauBERT [25]**: Another French specific language encoder based on BERT. This model was trained on very large and heterogeneous French corpus. we used the base-cased version[^13] for our fine-tuning.
+**FlauBERT [6]**: Another French specific language encoder based on BERT. This model was trained on very large and heterogeneous French corpus. we used the base-cased version[^6] for our fine-tuning.
 
-**FrALBERT [26]**: An ALBERT-based [?] encoder, proposed as an alternative to BERT encoder. We chose the French language version[^14] to further fine-tune it.
+**FrALBERT**: An ALBERT-based [7] encoder, proposed as an alternative to BERT encoder. We chose the French language version[^7] to further fine-tune it.
 
-**XLM-RoBERTa [24]**: Yet another RoBERTa-based encoder. This encoder is very popular among researchers for its improved performance compared to other multilingual encoders. We adapt the base version[^15] as well on our dataset.
+**XLM-RoBERTa [8]**: Yet another RoBERTa-based encoder. This encoder is very popular among researchers for its improved performance compared to other multilingual encoders. We adapt the base version[^8] as well on our dataset.
 
 ## H. Accuracy and Precision at different values of $$k$$
 
@@ -112,3 +112,31 @@ In Figure 10, Same as index hallucination, the LLM subtly rewrites the address m
 ![image](https://github.com/user-attachments/assets/6dafde83-add1-4f7d-b339-c60dd2a381bf)
 
 **Figure 10.** Address level hallucination.
+
+## References
+
+[1] Liu X, Chen T, Da L, Chen C, Lin Z, Wei H. **Uncertainty Quantification and Confidence Calibration in Large Language Models: A Survey.** *arXiv preprint* arXiv:2503.15850; 2025. Available from: https://arxiv.org/abs/2503.15850
+
+[2] Sanh V, Debut L, Chaumond J, Wolf T. **DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter.** *arXiv preprint* arXiv:1910.01108; 2019. Available from: https://arxiv.org/abs/1910.01108
+
+[3] Devlin J, Chang MW, Lee K, Toutanova K. **BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.** In: *Proceedings of the 2019 Conference of the North*. 2019. [doi:10.18653/v1/n19-1423](https://doi.org/10.18653/v1/n19-1423)
+
+[4] Martin L, Muller B, Ortiz Suárez PJ, Dupont Y, Romary L, Villemonte de la Clergerie É, et al. **CamemBERT: a Tasty French Language Model.** In: *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics*. Association for Computational Linguistics; 2020. p. 7203–7219. [doi:10.18653/v1/2020.acl-main.645](https://doi.org/10.18653/v1/2020.acl-main.645)
+
+[5] Liu Y, Ott M, Goyal N, Du J, Joshi M, Chen D, et al. **RoBERTa: A Robustly Optimized BERT Pretraining Approach.** *arXiv*; 2019. Available from: https://arxiv.org/abs/1907.11692
+
+[6] Le H, Vial L, Frej J, Segonne V, Coavoux M, Lecouteux B, et al. **FlauBERT: Unsupervised Language Model Pre-training for French.** In: *Proceedings of the Twelfth Language Resources and Evaluation Conference*. Marseille, France: European Language Resources Association; 2020. p. 2479–2490.
+
+[7] Lan Z, Chen M, Goodman S, Gimpel K, Sharma P, Soricut R. **ALBERT: A Lite BERT for Self-supervised Learning of Language Representations.** In: *International Conference on Learning Representations (ICLR)*; 2020.
+
+[8] Conneau A, Khandelwal K, Goyal N, Chaudhary V, Wenzek G, Guzmán F, et al. **Unsupervised Cross-lingual Representation Learning at Scale.** In: *Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics*. Association for Computational Linguistics; 2020. p. 8440–8451. [doi:10.18653/v1/2020.acl-main.747](https://doi.org/10.18653/v1/2020.acl-main.747)
+
+
+[^1]: https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-mnli-xnli
+[^2]: https://huggingface.co/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7
+[^3]: https://huggingface.co/cmarkea/distilcamembert-base-nli
+[^4]: https://huggingface.co/distilbert/distilbert-base-multilingual-cased
+[^5]: https://huggingface.co/almanach/camembert-base-wikipedia-4gb
+[^6]: https://huggingface.co/flaubert/flaubert_base_cased
+[^7]: https://huggingface.co/qwant/fralbert-base
+[^8]: https://huggingface.co/FacebookAI/xlm-roberta-base
