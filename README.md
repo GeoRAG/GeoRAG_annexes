@@ -65,7 +65,7 @@ retrieval set. In fact, if the LLM was only presented with the normalized versio
 query matching address, it would have no problem rejecting the address candidate. Indeed, it is clearly apparent that the normalized street, **Avenue du tertre**, is completely
 different from the alias street, **Rte nationale 6**.
 
-## E. NLI scoring function
+## F. NLI scoring function
 Based on the NLI scoring strategy used in [31], we define our NLI scoring function $$s_{nli}(\cdot)$$ as the average of NLI similarities of three pre-trained multilingual cross-encoders[^8][^9][^10]. We purposely chose to aggregate different models' scores to alleviate the impact of false entailment. Specifically, the input of an NLI model is the concatenation of a query $$q$$ and a retrieved address $$d$$ upon which the model returns probabilities $$p_i$$ with $$i\in\{contradiction, neutral, entailement\}$$. We can then compute the NLI similarity as $$1-p_{contradcition}$$. As mentioned in [31], both orders $$(q,d)$$ and $$(d,q)$$ are considered to mitigate positional bias of the NLI system. The NLI similarity of a model $$E$$ is then denoted:
 
 
@@ -85,7 +85,7 @@ Where $$1-p_{contradiction}$$ and $$1-p'_{contradiction}$$ are NLI similarities 
 
 **XLM-RoBERTa [24]**: Yet another RoBERTa-based encoder. This encoder is very popular among researchers for its improved performance compared to other multilingual encoders. We adapt the base version[^15] as well on our dataset.
 
-## D. Accuracy and Precision at different values of $$k$$
+## H. Accuracy and Precision at different values of $$k$$
 
 ![image](https://github.com/user-attachments/assets/3d086fb1-572f-4fd3-b605-da74c9dede74)
 
