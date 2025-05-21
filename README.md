@@ -1,4 +1,4 @@
-# GeoRAG_annexes
+# Appendix
 
 ## A. Address anomlies
 ### A.1. Type of anomalies inbserved query-delivies
