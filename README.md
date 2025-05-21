@@ -105,7 +105,7 @@ In Figure 9, we can see with a simple keyboard find function that the LLM predic
 
 **Figure 9.** Index level hallucination.
 
-## J.2. Index level hallucination
+## J.2. Address level hallucination
 
 In Figure 10, Same as index hallucination, the LLM subtly rewrites the address match rather then just selecting from the alias candidate list. 
 
